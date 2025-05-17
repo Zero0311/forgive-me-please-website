@@ -16,28 +16,16 @@ const SorryCard: React.FC = () => {
     navigate('/thank-you');
   };
 
-  // Handle No button hover
-  const handleNoHover = () => {
-    if (moveCount < 5) {
-      // Move button to a random position within the viewport
-      const maxX = window.innerWidth - 150;
-      const maxY = window.innerHeight - 100;
-      const newX = Math.max(50, Math.floor(Math.random() * maxX));
-      const newY = Math.max(50, Math.floor(Math.random() * maxY));
-      
-      setNoButtonPosition({ x: newX, y: newY });
-      setMoveCount(moveCount + 1);
-    } else {
-      // After 5 moves, make the button shake instead
-      if (noButtonRef.current) {
-        noButtonRef.current.classList.add('animate-shake');
-        setTimeout(() => {
-          if (noButtonRef.current) {
-            noButtonRef.current.classList.remove('animate-shake');
-          }
-        }, 800);
-      }
-    }
+  // Handle No button hover or click
+  const handleNoInteraction = () => {
+    // Always move button to a random position within the viewport
+    const maxX = window.innerWidth - 150;
+    const maxY = window.innerHeight - 100;
+    const newX = Math.max(50, Math.floor(Math.random() * maxX));
+    const newY = Math.max(50, Math.floor(Math.random() * maxY));
+    
+    setNoButtonPosition({ x: newX, y: newY });
+    setMoveCount(moveCount + 1);
   };
 
   return (
@@ -75,7 +63,8 @@ const SorryCard: React.FC = () => {
               top: `${noButtonPosition.y}px`,
               zIndex: 50
             } : {}}
-            onMouseEnter={handleNoHover}
+            onClick={handleNoInteraction}
+            onMouseEnter={handleNoInteraction}
           >
             No, I don't
           </Button>
